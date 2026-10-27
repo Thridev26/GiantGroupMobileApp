@@ -6,16 +6,14 @@ namespace GiantGroupMobileApp.ViewModels;
 
 public partial class SettingsViewModel : BaseViewModel
 {
-    private readonly ISessionService _session;
     private readonly ISettingsService _settings;
     private readonly IApiClient _api;
     private readonly IPhotoQueueService _queue;
     private readonly IDialogService _dialogs;
     private bool _loading;
 
-    public SettingsViewModel(ISessionService session, ISettingsService settings, IApiClient api, IPhotoQueueService queue, IDialogService dialogs)
+    public SettingsViewModel(ISettingsService settings, IApiClient api, IPhotoQueueService queue, IDialogService dialogs)
     {
-        _session = session;
         _settings = settings;
         _api = api;
         _queue = queue;
@@ -23,8 +21,8 @@ public partial class SettingsViewModel : BaseViewModel
         _queue.Changed += () => OnPropertyChanged(nameof(QueueText));
     }
 
-    [ObservableProperty] private string _userName = "";
-    [ObservableProperty] private string _roleText = "";
+    [ObservableProperty] private string _userName = "Giant Group Ops";
+    [ObservableProperty] private string _roleText = "Site team";
     [ObservableProperty] private string _serverText = "";
     [ObservableProperty] private bool _wifiOnly;
     [ObservableProperty] private bool _demoMode;
@@ -35,8 +33,6 @@ public partial class SettingsViewModel : BaseViewModel
     public void OnAppearing()
     {
         _loading = true;
-        UserName = _session.Current?.Name ?? "";
-        RoleText = _session.Current?.RoleLabel ?? "";
         ServerText = _settings.DemoMode ? "Demo mode (sample data)" : _settings.ServerUrl;
         WifiOnly = _settings.WifiOnlyUploads;
         DemoMode = _settings.DemoMode;
@@ -60,15 +56,15 @@ public partial class SettingsViewModel : BaseViewModel
     private async Task SwitchDemoAsync(bool value)
     {
         var ok = await _dialogs.ConfirmAsync(value ? "Switch to demo mode?" : "Leave demo mode?",
-            "You'll be signed out and returned to the sign-in screen.", "Continue");
+            value ? "The app will show sample data instead of live data." : "The app will show live data from the server.", "Continue");
         if (!ok)
         {
             _loading = true; DemoMode = !value; _loading = false;
             return;
         }
         _settings.DemoMode = value;
-        await _session.SignOutAsync();
-        await Shell.Current.GoToAsync("//login");
+        ServerText = value ? "Demo mode (sample data)" : _settings.ServerUrl;
+        await Shell.Current.GoToAsync("//dashboard");
     }
 
     [RelayCommand]
@@ -79,20 +75,8 @@ public partial class SettingsViewModel : BaseViewModel
     {
         await RunAsync(async () =>
         {
-            var me = await _api.GetMeAsync();
-            ShowBanner($"Connected – signed in as {me.Name}");
+            await _api.GetDashboardAsync();
+            ShowBanner("Connected to the Giant Group server");
         });
-    }
-
-    [RelayCommand]
-    private async Task SignOutAsync()
-    {
-        var pending = _queue.OutstandingCount;
-        var msg = pending > 0
-            ? $"{pending} photo{(pending == 1 ? " is" : "s are")} still waiting to upload. They stay on this phone and upload after the next sign-in."
-            : "You'll need to sign in again to use the app.";
-        if (!await _dialogs.ConfirmAsync("Sign out?", msg, "Sign out")) return;
-        await _session.SignOutAsync();
-        await Shell.Current.GoToAsync("//login");
     }
 }

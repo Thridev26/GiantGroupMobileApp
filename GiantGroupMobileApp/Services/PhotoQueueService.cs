@@ -28,7 +28,6 @@ public class PhotoQueueService : IPhotoQueueService
     private static readonly string QueueFile = Path.Combine(FileSystem.AppDataDirectory, "upload-queue.json");
 
     private readonly IApiClient _api;
-    private readonly ISessionService _session;
     private readonly ISettingsService _settings;
     private readonly SemaphoreSlim _fileLock = new(1, 1);
     private readonly List<QueuedPhoto> _items = new();
@@ -36,10 +35,9 @@ public class PhotoQueueService : IPhotoQueueService
     private int _retryScheduled;
     private bool _initialized;
 
-    public PhotoQueueService(IApiClient api, ISessionService session, ISettingsService settings)
+    public PhotoQueueService(IApiClient api, ISettingsService settings)
     {
         _api = api;
-        _session = session;
         _settings = settings;
     }
 
@@ -98,7 +96,6 @@ public class PhotoQueueService : IPhotoQueueService
 
     public async Task ProcessAsync()
     {
-        if (!_session.IsSignedIn) return;
         if (Interlocked.Exchange(ref _running, 1) == 1) return;   // one worker at a time
         var needsRetryLater = false;
         try

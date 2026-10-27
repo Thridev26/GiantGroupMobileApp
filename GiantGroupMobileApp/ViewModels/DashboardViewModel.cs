@@ -9,14 +9,12 @@ namespace GiantGroupMobileApp.ViewModels;
 public partial class DashboardViewModel : BaseViewModel
 {
     private readonly IApiClient _api;
-    private readonly ISessionService _session;
     private readonly IPhotoQueueService _queue;
     private readonly AppState _state;
 
-    public DashboardViewModel(IApiClient api, ISessionService session, IPhotoQueueService queue, AppState state)
+    public DashboardViewModel(IApiClient api, IPhotoQueueService queue, AppState state)
     {
         _api = api;
-        _session = session;
         _queue = queue;
         _state = state;
         _queue.Changed += () => { OnPropertyChanged(nameof(QueueText)); OnPropertyChanged(nameof(HasQueue)); };
@@ -50,7 +48,7 @@ public partial class DashboardViewModel : BaseViewModel
     {
         var hour = DateTime.Now.Hour;
         var part = hour < 12 ? "Good morning" : hour < 17 ? "Good afternoon" : "Good evening";
-        Greeting = $"{part}, {_session.Current?.FirstName ?? "there"}";
+        Greeting = part;
         Today = DateTime.Today.ToString("dddd, d MMMM");
         OnPropertyChanged(nameof(QueueText));
         OnPropertyChanged(nameof(HasQueue));
