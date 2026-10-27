@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:GiantGroupMobileApp.ViewModels"
+             x:Class="GiantGroupMobileApp.Views.StartupPage"
+             x:DataType="vm:StartupViewModel"
+             Shell.NavBarIsVisible="False"
+             Shell.TabBarIsVisible="False"
+             BackgroundColor="{StaticResource Primary}">
+    <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="28">
+        <Border Padding="22,16" BackgroundColor="White" StrokeThickness="0">
+            <Image Source="giant_logo.png" HeightRequest="70" Aspect="AspectFit" SemanticProperties.Description="The Giant Group" />
+        </Border>
+        <ActivityIndicator IsRunning="True" Color="White" />
+    </VerticalStackLayout>
+</ContentPage>

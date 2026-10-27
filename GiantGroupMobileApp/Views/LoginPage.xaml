@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:GiantGroupMobileApp.ViewModels"
+             x:Class="GiantGroupMobileApp.Views.LoginPage"
+             x:DataType="vm:LoginViewModel"
+             Shell.NavBarIsVisible="False"
+             Shell.TabBarIsVisible="False">
+    <ScrollView>
+        <VerticalStackLayout Padding="24,48,24,24" Spacing="18" MaximumWidthRequest="480">
+
+            <Border Padding="22,16" BackgroundColor="White" HorizontalOptions="Center" Stroke="Transparent">
+                <Image Source="giant_logo.png" HeightRequest="64" Aspect="AspectFit" SemanticProperties.Description="The Giant Group" />
+            </Border>
+
+            <VerticalStackLayout Spacing="4" Margin="0,8,0,4">
+                <Label Text="Operations sign-in" Style="{StaticResource Title1}" HorizontalOptions="Center" />
+                <Label Text="Manage requests, jobs and site photos on the go" Style="{StaticResource Muted}" HorizontalOptions="Center" HorizontalTextAlignment="Center" />
+            </VerticalStackLayout>
+
+            <!-- Step 1 -->
+            <VerticalStackLayout Spacing="12" IsVisible="{Binding IsCredentialsStage}">
+                <Border Padding="14,2">
+                    <Entry Placeholder="Username or email" Text="{Binding Username}" Keyboard="Email" ReturnType="Next"
+                           AutomationId="UsernameEntry" SemanticProperties.Description="Username or email" />
+                </Border>
+                <Border Padding="14,2">
+                    <Entry Placeholder="Password" Text="{Binding Password}" IsPassword="True" ReturnType="Go"
+                           ReturnCommand="{Binding SignInCommand}" AutomationId="PasswordEntry" SemanticProperties.Description="Password" />
+                </Border>
+                <Button Text="Sign in" Command="{Binding SignInCommand}" IsEnabled="{Binding IsNotBusy}" Margin="0,6,0,0" />
+            </VerticalStackLayout>
+
+            <!-- Step 2 -->
+            <VerticalStackLayout Spacing="12" IsVisible="{Binding IsOtpStage}">
+                <Label Text="{Binding MaskedEmail, StringFormat='We emailed a 6-digit code to {0}. It expires in 5 minutes.'}"
+                       HorizontalTextAlignment="Center" Style="{StaticResource Muted}" />
+                <Border Padding="14,2">
+                    <Entry Placeholder="000000" Text="{Binding OtpCode}" Keyboard="Numeric" MaxLength="6" HorizontalTextAlignment="Center"
+                           FontSize="26" CharacterSpacing="8" ReturnType="Go" ReturnCommand="{Binding VerifyCommand}" AutomationId="OtpEntry" />
+                </Border>
+                <Button Text="Verify and continue" Command="{Binding VerifyCommand}" IsEnabled="{Binding IsNotBusy}" />
+                <Button Text="Back" Style="{StaticResource TextButton}" Command="{Binding BackCommand}" />
+            </VerticalStackLayout>
+
+            <Label Text="{Binding ErrorMessage}" IsVisible="{Binding HasError}" TextColor="{StaticResource Danger}"
+                   HorizontalTextAlignment="Center" FontFamily="OpenSansSemibold" />
+            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" HorizontalOptions="Center" />
+
+            <VerticalStackLayout Spacing="2" Margin="0,24,0,0">
+                <Label Text="{Binding ServerLabel}" Style="{StaticResource Muted}" HorizontalTextAlignment="Center" FontSize="11" LineBreakMode="MiddleTruncation" />
+                <Button Text="Connection settings" Style="{StaticResource TextButton}" Command="{Binding EditServerCommand}" FontSize="13" MinimumHeightRequest="36" />
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

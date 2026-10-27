@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:GiantGroupMobileApp.ViewModels"
+             xmlns:ctrl="clr-namespace:GiantGroupMobileApp.Views.Controls"
+             x:Class="GiantGroupMobileApp.Views.SettingsPage"
+             x:DataType="vm:SettingsViewModel"
+             Title="More">
+    <Grid RowDefinitions="Auto,*">
+        <ctrl:BannerView Grid.Row="0" />
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16,12,16,32" Spacing="14">
+
+                <Border Padding="16">
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="{Binding UserName}" Style="{StaticResource Title2}" />
+                        <Label Text="{Binding RoleText}" Style="{StaticResource Muted}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Label Text="PHOTOS" Style="{StaticResource SectionLabel}" Margin="4,6,0,0" />
+                <Border Padding="16">
+                    <VerticalStackLayout Spacing="14">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <VerticalStackLayout>
+                                <Label Text="Upload queue" FontFamily="OpenSansSemibold" />
+                                <Label Text="{Binding QueueText}" Style="{StaticResource Muted}" />
+                            </VerticalStackLayout>
+                            <Button Grid.Column="1" Text="Open" Command="{Binding OpenQueueCommand}" Style="{StaticResource OutlineButton}" MinimumHeightRequest="38" Padding="16,0" />
+                        </Grid>
+                        <Grid ColumnDefinitions="*,Auto">
+                            <VerticalStackLayout>
+                                <Label Text="Upload on Wi-Fi only" FontFamily="OpenSansSemibold" />
+                                <Label Text="Saves mobile data. Photos wait until Wi-Fi is available." Style="{StaticResource Muted}" />
+                            </VerticalStackLayout>
+                            <Switch Grid.Column="1" IsToggled="{Binding WifiOnly}" VerticalOptions="Center" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <Label Text="CONNECTION" Style="{StaticResource SectionLabel}" Margin="4,6,0,0" />
+                <Border Padding="16">
+                    <VerticalStackLayout Spacing="14">
+                        <VerticalStackLayout>
+                            <Label Text="Server" FontFamily="OpenSansSemibold" />
+                            <Label Text="{Binding ServerText}" Style="{StaticResource Muted}" LineBreakMode="MiddleTruncation" />
+                        </VerticalStackLayout>
+                        <Button Text="Test connection" Command="{Binding TestConnectionCommand}" IsEnabled="{Binding IsNotBusy}" Style="{StaticResource OutlineButton}" />
+                        <Grid ColumnDefinitions="*,Auto">
+                            <VerticalStackLayout>
+                                <Label Text="Demo mode" FontFamily="OpenSansSemibold" />
+                                <Label Text="Practice with sample data – nothing is sent to the server." Style="{StaticResource Muted}" />
+                            </VerticalStackLayout>
+                            <Switch Grid.Column="1" IsToggled="{Binding DemoMode}" VerticalOptions="Center" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <Button Text="Sign out" Command="{Binding SignOutCommand}" Style="{StaticResource DangerButton}" Margin="0,10,0,0" />
+                <Label Text="{Binding VersionText}" Style="{StaticResource Muted}" HorizontalTextAlignment="Center" FontSize="11" />
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GiantGroupMobileApp.MainPage"
+             BackgroundColor="{AppThemeBinding Light=#f3f6f4, Dark=#0b1410}"
+             Title="The Giant Group">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="24" Padding="16">
+
+            <!-- 1. HERO BANNER CARD (Mimics gg-banner & gg-hero) -->
+            <Border StrokeShape="RoundRectangle 22" 
+                    StrokeThickness="0" 
+                    BackgroundColor="#1b4332"
+                    Shadow="{Shadow Brush=#0f2d1e, Offset='0,10', Radius=20}">
+                <VerticalStackLayout Padding="24" Spacing="16">
+                    <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
+                        <Label Text="🛡️" FontSize="18"/>
+                        <Label Text="Code Crusaders Enterprise" TextColor="#95d5b2" FontSize="12" FontAttributes="Bold" VerticalTextAlignment="Center"/>
+                    </HorizontalStackLayout>
+
+                    <Label Text="Professional Tree-Felling and Vegetation Management" 
+                           TextColor="White" 
+                           FontSize="24" 
+                           FontFamily="Fraunces" 
+                           FontAttributes="Bold" 
+                           LineHeight="1.1"/>
+
+                    <Label Text="South Africa's premier titan in professional tree felling, hazardous vegetation management, and commercial property maintenance." 
+                           TextColor="#cfe5d9" 
+                           FontSize="14"/>
+
+                    <Button Text="Get a Free Quote" 
+                            BackgroundColor="White" 
+                            TextColor="#1b4332" 
+                            FontAttributes="Bold"
+                            CornerRadius="10"
+                            Clicked="OnQuoteClicked"
+                            HorizontalOptions="Fill"/>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- 2. PERFORMANCE METRICS (gg-stats) -->
+            <Grid ColumnDefinitions="*,*,*" ColumnSpacing="8">
+                <VerticalStackLayout Grid.Column="0" BackgroundColor="{AppThemeBinding Light=White, Dark=#12201a}" Padding="12" Spacing="4">
+                    <Label Text="100%" FontSize="18" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#13251c, Dark=#e5eee9}"/>
+                    <Label Text="Accuracy" FontSize="10" TextColor="{AppThemeBinding Light=#5b6f64, Dark=#9bb2a6}"/>
+                </VerticalStackLayout>
+                <VerticalStackLayout Grid.Column="1" BackgroundColor="{AppThemeBinding Light=White, Dark=#12201a}" Padding="12" Spacing="4">
+                    <Label Text="24/7" FontSize="18" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#13251c, Dark=#e5eee9}"/>
+                    <Label Text="Response" FontSize="10" TextColor="{AppThemeBinding Light=#5b6f64, Dark=#9bb2a6}"/>
+                </VerticalStackLayout>
+                <VerticalStackLayout Grid.Column="2" BackgroundColor="{AppThemeBinding Light=White, Dark=#12201a}" Padding="12" Spacing="4">
+                    <Label Text="Fast" FontSize="18" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#13251c, Dark=#e5eee9}"/>
+                    <Label Text="Invoicing" FontSize="10" TextColor="{AppThemeBinding Light=#5b6f64, Dark=#9bb2a6}"/>
+                </VerticalStackLayout>
+            </Grid>
+
+            <!-- 3. OUR SERVICES SECTION -->
+            <VerticalStackLayout Spacing="12">
+                <Label Text="OUR SERVICES" TextColor="#2d6a4f" FontSize="12" FontAttributes="Bold"/>
+                <Label Text="What We Do" FontSize="20" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#13251c, Dark=#e5eee9}"/>
+
+                <!-- Service Cards Collection -->
+                <VerticalStackLayout Spacing="10">
+                    <Border StrokeShape="RoundRectangle 14" BackgroundColor="{AppThemeBinding Light=White, Dark=#12201a}" Stroke="{AppThemeBinding Light=#dce6e0, Dark=#233a2f}" Padding="16">
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="🌳 Tree Felling &amp; Dismantling" FontAttributes="Bold" FontSize="15" TextColor="{AppThemeBinding Light=#13251c, Dark=#e5eee9}"/>
+                            <Label Text="Safe removal of hazardous and unwanted trees, including sectional dismantling where space is tight." FontSize="13" TextColor="{AppThemeBinding Light=#5b6f64, Dark=#9bb2a6}"/>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <Border StrokeShape="RoundRectangle 14" BackgroundColor="{AppThemeBinding Light=White, Dark=#12201a}" Stroke="{AppThemeBinding Light=#dce6e0, Dark=#233a2f}" Padding="16">
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="🪵 Stump Removal" FontAttributes="Bold" FontSize="15" TextColor="{AppThemeBinding Light=#13251c, Dark=#e5eee9}"/>
+                            <Label Text="Stumps removed so your land is clear and ready to use again." FontSize="13" TextColor="{AppThemeBinding Light=#5b6f64, Dark=#9bb2a6}"/>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <Border StrokeShape="RoundRectangle 14" BackgroundColor="{AppThemeBinding Light=White, Dark=#12201a}" Stroke="{AppThemeBinding Light=#dce6e0, Dark=#233a2f}" Padding="16">
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="🚜 Site Clearing" FontAttributes="Bold" FontSize="15" TextColor="{AppThemeBinding Light=#13251c, Dark=#e5eee9}"/>
+                            <Label Text="Vegetation management and debris removal for commercial estates and development sites." FontSize="13" TextColor="{AppThemeBinding Light=#5b6f64, Dark=#9bb2a6}"/>
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+
+            <!-- 4. OAK CHATBOT TRIGGER CARD -->
+            <Border StrokeShape="RoundRectangle 16" BackgroundColor="#2d6a4f" Padding="16">
+                <Grid ColumnDefinitions="*, Auto">
+                    <VerticalStackLayout Grid.Column="0" Spacing="4">
+                        <Label Text="Ask Oak, Assistant" TextColor="White" FontAttributes="Bold" FontSize="16"/>
+                        <Label Text="Need pricing, hours, or services info? Chat with Oak instantly." TextColor="#d8f3dc" FontSize="12"/>
+                    </VerticalStackLayout>
+                    <Button Grid.Column="1" 
+                            Text="Chat" 
+                            BackgroundColor="White" 
+                            TextColor="#2d6a4f" 
+                            FontAttributes="Bold"
+                            CornerRadius="8"
+                            Clicked="OnOpenOakChatClicked"/>
+                </Grid>
+            </Border>
+
+            <!-- Footer Branding -->
+            <Label Text="© 2026 The Giant Group • Engineered by Code Crusaders" 
+                   HorizontalTextAlignment="Center" 
+                   FontSize="11" 
+                   TextColor="{AppThemeBinding Light=#5b6f64, Dark=#9bb2a6}" 
+                   Margin="0,10,0,20"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
